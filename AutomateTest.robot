@@ -52,6 +52,7 @@ ${MENU_CART}   //li[@data-cy='nav_user__cart']
 ${SHOPPING_BAG_DLG}   //div[contains(@class,'shopping-bag')]
 ${SHOPPING_BAG_TITLE}   //span[contains(@class,'subtitle1 shopping-bag__title')]
 ${SHOPPING_BAG_PRODUCT}   //div[contains(@class,'cart-body')]
+
 #Promo
 ${SHOPPING_BAG_PROMO}   //input[@placeholder='Enter Promo Code']
 ${SHOPPING_BAG_PROMO_APPLY}   //button[contains(@class,'pml-btn')]/span[contains(text(),'Apply')]
@@ -72,7 +73,7 @@ ${SEARCH_FIELD}   //input[contains(@class,'body2 pml-input__input')]
 A customer is able to add and adjust the products any category and proceed to checkout
     [Documentation]   A customer is able to register to website then add and adjust the products and then proceed to checkout
     [Setup]   Open Login Page   ${URL}
-    Register User Account With Email Address   automation@hotmail.com   Automatation   Testing   Aa24680!1
+    Register User Account With Email Address   automation@hotmail.com   Automation   Testing   Aa24680!1
     Add A Product With Any Category    Floral Print Dress - Light Pink   L
     Navigate To Cart Page
     Verify A Product In Shopping Bag    Floral Print Dress - Light Pink     L    1
@@ -159,17 +160,18 @@ Navigate To Cart Page
     Wait Until Element Is Visible   ${MENU_CART}   20
     Click Element   ${MENU_CART}
     Wait Until Element Is Visible   ${SHOPPING_BAG_DLG}   20
-    Element Should Contain   ${SHOPPING_BAG_TITLE}    My Shopping Bag
     
 Verify A Product In Shopping Bag
     [Documentation]   Verify the added product in shopping bag, verify product name, size and quantity
     [Arguments]    ${product}     ${size}    ${quantity}
     Wait Until Element Is Visible   ${SHOPPING_BAG_PRODUCT}   20
+    Element Should Contain   ${SHOPPING_BAG_TITLE}    My Shopping Bag
     Element Should Contain   ${SHOPPING_BAG_PRODUCT}   ${product}
     ${size_selected}=   Get Selected List Label   //div[contains(@class,'roduct-information') and div/div/a[contains(text(),'${product}')]]//div[contains(@class,'cart-item-info__size')]//select
     Should Be Equal    ${size_selected}   ${size}
     ${qutity_selected}=   Get Selected List Value   //div[contains(@class,'roduct-information') and div/div/a[contains(text(),'${product}')]]//div[@class='cart-item-info__quantity']//select
     Should Be Equal    ${qutity_selected}   ${quantity}
+    Wait Until Element Is Visible     ${SHOPPING_BAG_PROMO_APPLY}   20
 
 Adjust Quantity Of Procuct In Shopping Bag
     [Documentation]   A customer is able to adjust quantity of the product that they want by sending the product name and quantity in Shopping bag
