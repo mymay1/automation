@@ -2,6 +2,7 @@
 Documentation     A test suite for verifying Shopping bag page. A customer is able to add the product, adjust size and quantity and then proceed to checkout
 Library           RequestsLibrary
 Library           SeleniumLibrary
+Library           String
 
 *** Variables ***
 ${URL}    https://www.pomelofashion.com/th/en/ 
@@ -69,13 +70,14 @@ ${SEARCH_FIELD}   //input[contains(@class,'body2 pml-input__input')]
 
 *** Test Cases ***
 A customer is able to add and adjust the products any category and proceed to checkout
-    [Setup]   Run Keywords   Open Login Page   ${URL}
-    ...   AND  Register User Account With Email Address   automation3@hotmail.com   Automation   Testing   Aa24680!1
-    Add A Product With Any Category   Maxi Dresses   Floral Print Dress - Light Pink   L
+    [Documentation]   A customer is able to register to website then add and adjust the products and then proceed to checkout
+    [Setup]   Open Login Page   ${URL}
+    Register User Account With Email Address   automation@hotmail.com   Automatation   Testing   Aa24680!1
+    Add A Product With Any Category    Floral Print Dress - Light Pink   L
     Navigate To Cart Page
     Verify A Product In Shopping Bag    Floral Print Dress - Light Pink     L    1
     Close Shopping Bag
-    Add A Product With Any Category    Flats    Wanderlust Olivia Frost Pointed Toe Flats - Navy   39
+    Add A Product With Any Category    Wanderlust Olivia Frost Pointed Toe Flats - Navy   39
     Navigate To Cart Page
     Verify A Product In Shopping Bag    Wanderlust Olivia Frost Pointed Toe Flats - Navy   39    1
     Adjust Size Of Procuct In Shopping Bag     Floral Print Dress - Light Pink    M
@@ -88,13 +90,14 @@ A customer is able to add and adjust the products any category and proceed to ch
     [Teardown]   Run Keywords   Logout Page   AND   Close Browser   
   
 *** Keywords ***
+
+
 Open Login Page
     [Documentation]   A customer is able to open a website
     [Arguments]    ${url}   
     Open Browser   ${url}    ${BROWSER}    
     Maximize Browser Window
     Wait Until Element Is Visible   ${MENU_LOGIN}    20
-    Sleep   10
     
 
 Register User Account With Email Address
@@ -105,7 +108,8 @@ Register User Account With Email Address
     Wait Until Element Is Visible   ${REGISTER_FORM}   20
     Wait Until Element Is Visible   ${REGISTER_EMAIL_FORM}   20    
     Click Element    ${REGISTER_EMAIL}
-    Input Text   ${REGISTER_EMAIL}   ${email}
+    ${result}=    Generate Random String
+    Input Text   ${REGISTER_EMAIL}   ${result}${email}
     Input Text   ${REGISTER_FIRSTNAME}   ${firstname}    
     Input Text   ${REGISTER_LASTNAME}   ${lastname}
     Input Text   ${REGISTER_PASSWORD}   ${psw}
@@ -130,7 +134,7 @@ Logout Page
    
 Add A Product With Any Category
     [Documentation]   A customer is able to add a product with any category by searching a product and then select
-    [Arguments]     ${category}   ${product}    ${size}  
+    [Arguments]      ${product}    ${size}  
     Wait Until Element Is Visible   ${SEARCH_BTN}    20
     Click Element   ${SEARCH_BTN}
     Wait Until Element Is Visible    ${SEARCH_FORM}   20
