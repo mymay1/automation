@@ -109,8 +109,8 @@ Register User Account With Email Address
     Wait Until Element Is Visible   ${REGISTER_FORM}   20
     Wait Until Element Is Visible   ${REGISTER_EMAIL_FORM}   20    
     Click Element    ${REGISTER_EMAIL}
-    ${result}=    Generate Random String
-    Input Text   ${REGISTER_EMAIL}   ${result}${email}
+    ${random}=    Generate Random String
+    Input Text   ${REGISTER_EMAIL}   ${random}${email}
     Input Text   ${REGISTER_FIRSTNAME}   ${firstname}    
     Input Text   ${REGISTER_LASTNAME}   ${lastname}
     Input Text   ${REGISTER_PASSWORD}   ${psw}
